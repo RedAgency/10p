@@ -184,7 +184,7 @@ main{max-width:1240px;margin:0 auto;padding:26px 32px 80px}
 .qbar i{display:block;height:100%;border-radius:4px}
 .qcard .qdates{font-family:var(--mono);font-size:11px;color:#7B90B2;display:flex;justify-content:space-between}
 
-/* ── Roadmap зам (winding road) ── */
+/* ── Roadmap зам (сарын milestone template) ── */
 .road-wrap{background:var(--snow);border:1px solid var(--frost);border-radius:16px;padding:18px 0 10px;overflow:hidden}
 .road-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 22px 6px;flex-wrap:wrap;gap:6px}
 .road-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
@@ -192,24 +192,47 @@ main{max-width:1240px;margin:0 auto;padding:26px 32px 80px}
 .road-scroll::-webkit-scrollbar-thumb{background:var(--frost);border-radius:6px}
 .road-canvas{position:relative}
 .road-canvas svg{display:block}
-.rnode{position:absolute;width:76px;height:76px;border-radius:50%;background:#fff;
-  border:3px solid var(--frost);display:flex;align-items:center;justify-content:center;
-  font-size:30px;box-shadow:0 8px 20px rgba(11,31,58,.16);z-index:2;transform:translate(-50%,-50%)}
-.rnode .rp{position:absolute;bottom:-9px;font-family:var(--mono);font-size:10px;font-weight:700;
-  background:var(--ink);color:#fff;border-radius:10px;padding:1px 8px}
-.rcard{position:absolute;width:196px;transform:translateX(-50%);display:flex;flex-direction:column;gap:5px;z-index:1}
-.rcard.top{justify-content:flex-end;text-align:center;align-items:center}
-.rcard.bot{text-align:center;align-items:center}
-.rcard .rt{font-size:13px;font-weight:800;line-height:1.3;color:var(--ink);
-  border-bottom:3px solid var(--glacier);padding-bottom:4px;display:inline;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.rcard .rm{font-size:11px;color:#5C7396;line-height:1.45}
-.rcard .rm b{color:#41587B}
-.rcard .rbadge{font-size:10px;font-weight:800;border-radius:12px;padding:3px 10px}
-.rcard .rprog{width:110px;height:5px;border-radius:4px;background:var(--ice);overflow:hidden}
-.rcard .rprog i{display:block;height:100%;border-radius:4px}
-.rmonth{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:10px;font-weight:700;
-  color:#fff;background:var(--glacier);border-radius:12px;padding:3px 10px;z-index:3;white-space:nowrap}
+.mnode{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:26px;transform:translate(-50%,-50%);z-index:2;
+  width:68px;height:68px;box-shadow:0 10px 22px rgba(11,31,58,.18)}
+.mnode small{font-size:10px;font-weight:700;opacity:.9;margin-left:2px}
+.mcard{position:absolute;width:216px;transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;text-align:center;gap:9px;z-index:1}
+.mcard.top{justify-content:flex-end}
+.mpill{background:#fff;border:2.5px solid;border-radius:26px;padding:8px 24px;
+  font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
+  box-shadow:0 4px 12px rgba(11,31,58,.08)}
+.mdesc{font-size:12px;color:#4E6588;line-height:1.55}
+.mdesc b{color:var(--ink)}
+.mstat{font-family:var(--mono);font-size:10.5px;color:#7B90B2}
+
+/* ── Зорилт — 2026 стратеги (уулын слайд) ── */
+.strat{position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(175deg,#0B1F3A 0%,#123765 46%,#2E5C9E 78%,#7FA3D4 100%);box-shadow:0 14px 34px rgba(11,31,58,.25)}
+.strat-sky{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:
+   linear-gradient(115deg,transparent 46%,rgba(255,255,255,.10) 46.5%,rgba(255,255,255,.10) 50%,transparent 50.5%),
+   linear-gradient(245deg,transparent 40%,rgba(255,255,255,.07) 40.5%,rgba(255,255,255,.07) 47%,transparent 47.5%),
+   radial-gradient(ellipse 80% 45% at 50% 118%,rgba(255,255,255,.34),transparent 60%)}
+.strat-inner{position:relative;padding:34px 34px 40px}
+.strat-inner h2{color:#fff;font-size:clamp(20px,2.7vw,30px);font-weight:800;letter-spacing:-.01em;margin-bottom:26px}
+.strat-grid{display:flex;flex-direction:column;gap:0;overflow-x:auto}
+.sg-head{display:flex;min-width:720px}
+.sg-head .sg-lab{flex:0 0 285px}
+.sg-head .sg-mos{flex:1;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-radius:6px 6px 0 0;overflow:hidden}
+.sg-head .sg-mos div{font-size:13px;font-weight:800;color:var(--peak);text-align:center;padding:9px 4px;border-left:1px solid var(--frost)}
+.sg-head .sg-mos div:first-child{border-left:none}
+.sg-row{display:flex;align-items:center;min-height:58px;min-width:720px}
+.sg-lab{flex:0 0 285px;padding-right:16px;color:#fff;font-size:13.5px;font-weight:700;line-height:1.35}
+.sg-lab small{display:block;font-weight:400;font-size:11px;color:#B9CCEE}
+.sg-track{flex:1;position:relative;height:58px;border-left:1px solid rgba(255,255,255,.35)}
+.sg-cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr)}
+.sg-cols div{border-right:1px solid rgba(255,255,255,.28)}
+.sg-bar{position:absolute;top:13px;height:32px;border-radius:7px;background:linear-gradient(180deg,#3E7BE0,#2A62C4);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;
+  padding:0 12px;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,.28)}
+.sg-today{position:absolute;top:0;bottom:0;width:0;border-left:2.5px dashed #FF7A3D;z-index:3}
+.sg-today span{position:absolute;top:-4px;left:6px;font-family:var(--mono);font-size:9px;color:#FFB48A;white-space:nowrap}
+@media(max-width:860px){.sg-head .sg-lab,.sg-lab{flex-basis:170px}}
 
 /* ── Table ──────────────────────────── */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
@@ -242,30 +265,20 @@ footer{max-width:1240px;margin:0 auto;padding:0 32px 40px;font-size:12px;color:#
   <div class="hwrap">
     <div class="eyebrow">Tavan Bogd Group · Marketing · Хүйтэн Оргил</div>
     <h1>10P Roadmap <span class="thin">/ Ажлын тайлан</span></h1>
-    <p class="sub">Google Sheet дээрх ажлуудаа 10P хүрээгээр автоматаар ангилж, тайлан ба roadmap болгон харуулна.</p>
+    <p class="sub">Google Sheet дээрх ажлууд автоматаар татагдаж, 10P хүрээгээр тайлан ба roadmap болно.</p>
 
-    <div class="connect">
-      <input id="sheetUrl" placeholder="Google Sheet-ийн линк буулгах…  (Share → Anyone with the link → Viewer)">
-      <button class="btn-load" id="btnLoad">Холбох</button>
-      <button class="btn-ghost" id="btnDemo">Жишээ дата</button>
+    <div class="connect" style="align-items:center">
+      <span id="syncState" style="font-size:13px;color:#B9CCEE;display:inline-flex;align-items:center;gap:8px">
+        <span class="dot" style="width:9px;height:9px;border-radius:50%;background:#8FA9D6;display:inline-block"></span>
+        Sheet-тэй холбогдож байна…
+      </span>
+      <button class="btn-ghost" id="btnRefresh">⟳ Шинэчлэх</button>
+      <a href="https://docs.google.com/spreadsheets/d/1mvbqz09emtQmWVhp96koTq4Sjzkxs_Essg2DLCKxqXk/edit?gid=896600341" target="_blank" rel="noopener" style="font-size:13px;color:#9FBBEA;font-weight:600;text-decoration:none">Sheet нээх ↗</a>
     </div>
-
-    <details class="howto">
-      <summary>Google Sheet-ээ хэрхэн бэлдэх вэ?</summary>
-      <ol>
-        <li>Sheet-ийн эхний мөрөнд доорх багануудыг бичнэ (дараалал хамаагүй, монгол/англи аль нь ч болно).</li>
-        <li><b>Share → Anyone with the link → Viewer</b> болгож нээнэ.</li>
-        <li>Линкээ дээрх талбарт буулгаад <b>Холбох</b> дарна. Таб (gid) сонгосон бол тухайн таб-ыг уншина.</li>
-      </ol>
-      <table>
-        <tr><th>Ажил*</th><th>10P*</th><th>Хариуцагч</th><th>Статус</th><th>Эхлэх</th><th>Дуусах</th><th>Брэнд</th><th>Явц %</th><th>Тайлбар</th></tr>
-        <tr><td>Digital board нэвтрүүлэх</td><td>6</td><td>М.Амаржаргал</td><td>Хийгдэж буй</td><td>2026-08-01</td><td>2026-10-31</td><td>ТБГ</td><td>35</td><td>—</td></tr>
-      </table>
-      <p style="margin-top:8px">10P багананд дугаар (1–10) эсвэл нэр (Product, Price, Promotion, Placement, People, Process, Physical, Positioning, Packaging, Partnership) аль нь ч болно. Статус: Төлөвлөсөн / Хийгдэж буй / Дууссан / Хойшилсон.</p>
-    </details>
 
     <div class="tabs">
       <button class="tab active" data-v="report">Тайлан</button>
+      <button class="tab" data-v="strat">Зорилт</button>
       <button class="tab" data-v="roadmap">Roadmap</button>
       <button class="tab" data-v="table">Жагсаалт</button>
     </div>
@@ -294,6 +307,17 @@ footer{max-width:1240px;margin:0 auto;padding:0 32px 40px;font-size:12px;color:#
     <div id="pgroups"></div>
   </section>
 
+  <!-- ЗОРИЛТ -->
+  <section id="v-strat" class="view">
+    <div class="strat">
+      <div class="strat-sky"></div>
+      <div class="strat-inner">
+        <h2>2026 оны стратегийн ажлын төлөвлөгөө</h2>
+        <div class="strat-grid" id="stratGrid"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ROADMAP -->
   <section id="v-roadmap" class="view">
     <div class="rmode">
@@ -303,8 +327,13 @@ footer{max-width:1240px;margin:0 auto;padding:0 32px 40px;font-size:12px;color:#
     </div>
     <div class="road-wrap" id="roadWrap">
       <div class="road-head">
-        <div><div class="sec-title" id="roadTitle">Ажлын зам</div>
-        <div class="sec-sub">Эхлэх огноогоор эрэмбэлсэн · баруун тийш гүйлгэж үзнэ</div></div>
+        <div><div class="sec-title" id="roadTitle">Сарын зам</div>
+        <div class="sec-sub">Сар бүрийн гол ажлууд · баруун тийш гүйлгэж үзнэ</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="roadFrom" style="padding:8px 10px;border-radius:9px;border:1px solid var(--frost);font-family:var(--sans);font-size:13px;color:var(--ink)"></select>
+          <span style="color:#5C7396">→</span>
+          <select id="roadTo" style="padding:8px 10px;border-radius:9px;border:1px solid var(--frost);font-family:var(--sans);font-size:13px;color:var(--ink)"></select>
+        </div>
       </div>
       <div class="road-scroll"><div class="road-canvas" id="road"></div></div>
     </div>
@@ -382,6 +411,7 @@ function normStatus(v){
 }
 function normP(v){
   const s = String(v||"").toLowerCase().trim();
+  if(/product\s*0\b/.test(s)) return 10; // Sheets autocorrect: "10" → "Product0"
   const num = parseInt(s.replace(/[^\d]/g,""));
   if(num>=1 && num<=10) return num;
   for(const p of PS){
@@ -407,6 +437,8 @@ function parseDate(v){
   const d = new Date(s); return isNaN(d)?null:d;
 }
 const fmtD = d=>d?`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`:"—";
+const pLabel = n=>{ const p=PS.find(x=>x.n===n); return p? `${p.n}P ${p.key}` : "—"; };
+const pLabelFull = n=>{ const p=PS.find(x=>x.n===n); return p? `${p.n}P ${p.key} · ${p.mn}` : "—"; };
 
 /* header detection */
 const COLMAP = [
@@ -414,6 +446,7 @@ const COLMAP = [
   ["p",      /10\s*p|^p$|хүрээ/i],
   ["owner",  /хариуц|owner|ажилтан|responsible|эзэн/i],
   ["status", /статус|status|төлөв/i],
+  ["priority",/ач\s*холбогдол|priority|яарал/i],
   ["start",  /эхлэх|эхэлсэн|start/i],
   ["end",    /дуус|deadline|end|due/i],
   ["brand",  /брэнд|компани|brand|company|салбар/i],
@@ -438,9 +471,11 @@ function rowsToTasks(headers, rows){
     const g = k=> m[k]===undefined ? "" : r[m[k]];
     const name = String(g("name")||"").trim();
     if(!name) return null;
+    const pr = String(g("priority")||"").toLowerCase();
     return {
       name, p:normP(g("p")), owner:String(g("owner")||"").trim(),
       brand:String(g("brand")||"").trim(), status:normStatus(g("status")),
+      priority: /маш/.test(pr)?2 : /яарал|urgent|high/.test(pr)?1 : 0,
       start:parseDate(g("start")), end:parseDate(g("end")),
       progress:Math.max(0,Math.min(100,parseFloat(String(g("progress")).replace("%",""))||0)),
       note:String(g("note")||"").trim(),
@@ -495,7 +530,7 @@ function render(){
   $("#ridge").innerHTML = PS.map(p=>{
     const n = T.filter(t=>t.p===p.n).length;
     const h = 6 + Math.round(26*n/max);
-    return `<div class="pcell ${n?"":"zero"} ${pFilter===p.n?"active":""}" data-p="${p.n}" role="button" tabindex="0" aria-label="${p.key}: ${n} ажил">
+    return `<div class="pcell ${n?"":"zero"} ${pFilter===p.n?"active":""}" data-p="${p.n}" role="button" tabindex="0" title="${p.n}P ${p.key} · ${p.mn}" aria-label="${p.key} (${p.mn}): ${n} ажил">
       <div class="pn">${p.n}P</div><div class="pk">${p.key}</div>
       <div class="cnt">${n}</div>
       <div class="peak"><svg viewBox="0 0 60 34" preserveAspectRatio="none">
@@ -578,65 +613,85 @@ function renderRoadmapList(){
   }
   el.innerHTML = html;
 }
-/* ── Roadmap зам — winding road ── */
-const P_ICON = {1:"💡",2:"💰",3:"📣",4:"🛒",5:"👥",6:"⚙️",7:"🏢",8:"🎯",9:"📦",10:"🤝",0:"❔"};
+/* ── Roadmap зам — сарын milestone (colorful template) ── */
 const MN_M = ["1-р сар","2-р сар","3-р сар","4-р сар","5-р сар","6-р сар","7-р сар","8-р сар","9-р сар","10-р сар","11-р сар","12-р сар"];
+const M_COLORS = ["#8B5CF6","#D9469E","#EC4E5F","#E9832F","#D9B121","#7CB342","#26B8CB","#5B7FE8","#9C6ADE","#3AA981"];
+function monthsOfTask(t){
+  // ажил идэвхтэй байх сарууд (key = year*12+month)
+  if(!t.start) return [];
+  const end = t.end || t.start;
+  const out = [];
+  let d = new Date(t.start.getFullYear(), t.start.getMonth(), 1);
+  const stop = new Date(end.getFullYear(), end.getMonth(), 1);
+  while(d <= stop && out.length < 24){ out.push(d.getFullYear()*12+d.getMonth()); d = new Date(d.getFullYear(),d.getMonth()+1,1); }
+  return out;
+}
 function renderRoad(){
   const el = $("#road");
-  let T = tasks.filter(t=>(!pFilter||t.p===pFilter));
-  if(!T.length){ el.innerHTML=`<div class="empty"><div class="big">🏔</div><p>Харуулах ажил алга.</p></div>`; $("#roadTitle").textContent="Ажлын зам"; return; }
-  const dated = T.filter(t=>t.start).sort((a,b)=>a.start-b.start || (b.progress-a.progress));
-  const undated = T.filter(t=>!t.start);
-  T = [...dated, ...undated];
-  $("#roadTitle").textContent = `Ажлын зам · ${T.length} буудал`;
+  const T = tasks.filter(t=>(!pFilter||t.p===pFilter));
+  const buckets = {}; // key -> {starts:[], ongoing:[]}
+  T.forEach(t=>{
+    const ms = monthsOfTask(t);
+    ms.forEach((k,idx)=>{
+      buckets[k] = buckets[k] || {starts:[],ongoing:[]};
+      (idx===0 ? buckets[k].starts : buckets[k].ongoing).push(t);
+    });
+  });
+  let keys = Object.keys(buckets).map(Number).sort((a,b)=>a-b);
+  if(!keys.length){ el.innerHTML=`<div class="empty"><div class="big">🏔</div><p>Огноотой ажил алга — Sheet дээрээ Эхлэх/Дуусах огноогоо нэмээрэй.</p></div>`; $("#roadTitle").textContent="Сарын зам"; return; }
 
-  const STEP=215, PAD=130, A=62, H=520, midY=H/2;
-  const W = PAD*2 + Math.max(0,(T.length-1))*STEP;
-  const pts = T.map((t,i)=>({x:PAD+i*STEP, y:i%2===0? midY-A : midY+A}));
+  // хугацааны сонголт
+  const optLbl = k=>`${Math.floor(k/12)} · ${MN_M[k%12]}`;
+  const selFrom = $("#roadFrom"), selTo = $("#roadTo");
+  const opts = keys.map(k=>`<option value="${k}">${optLbl(k)}</option>`).join("");
+  if(selFrom.dataset.keys !== keys.join(",")){
+    selFrom.innerHTML = opts; selTo.innerHTML = opts;
+    selFrom.value = keys[0]; selTo.value = keys[keys.length-1];
+    selFrom.dataset.keys = selTo.dataset.keys = keys.join(",");
+  }
+  let from = +selFrom.value, to = +selTo.value;
+  if(from>to){ [from,to]=[to,from]; }
+  keys = keys.filter(k=>k>=from && k<=to);
+  if(!keys.length){ el.innerHTML=`<div class="empty"><p>Сонгосон хугацаанд ажил алга.</p></div>`; return; }
+  $("#roadTitle").textContent = `Сарын зам · ${optLbl(keys[0])} → ${optLbl(keys[keys.length-1])}`;
 
-  // зам — гөлгөр муруй
-  let d = `M ${pts[0].x} ${pts[0].y}`;
-  for(let i=1;i<pts.length;i++){
-    const a=pts[i-1], b=pts[i], mx=(a.x+b.x)/2;
+  const STEP=250, PAD=150, A=52, H=580, midY=H/2;
+  const W = PAD*2 + Math.max(0,(keys.length-1))*STEP;
+  const stops = keys.map((k,i)=>({k, x:PAD+i*STEP, up:i%2===0, col:M_COLORS[i%M_COLORS.length]}));
+
+  // нимгэн саарал долгион шугам
+  const wave = [{x:24,y:midY}, ...stops.map(s=>({x:s.x, y:s.up? midY-A : midY+A})), {x:W-24,y:midY}];
+  let d = `M ${wave[0].x} ${wave[0].y}`;
+  for(let i=1;i<wave.length;i++){
+    const a=wave[i-1], b=wave[i], mx=(a.x+b.x)/2;
     d += ` C ${mx} ${a.y}, ${mx} ${b.y}, ${b.x} ${b.y}`;
   }
-  // зогсоолын дунд жижиг цэгүүд
-  const dots = pts.slice(1).map((p,i)=>{
-    const a=pts[i], mx=(a.x+p.x)/2;
-    return `<circle cx="${mx}" cy="${midY}" r="5" fill="#10305E"/><circle cx="${mx}" cy="${midY}" r="2.2" fill="#EEF3FB"/>`;
+  const dots = stops.slice(1).map((s,i)=>{
+    const mx=(stops[i].x+s.x)/2;
+    return `<circle cx="${mx}" cy="${midY}" r="8" fill="${s.col}"/>`;
   }).join("");
-
   const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
-    <path d="${d}" fill="none" stroke="#0B1F3A" stroke-width="11" stroke-linecap="round" opacity=".92"/>
-    <path d="${d}" fill="none" stroke="#EEF3FB" stroke-width="2.5" stroke-dasharray="9 11" stroke-linecap="round"/>
-    ${dots}</svg>`;
+    <path d="${d}" fill="none" stroke="#CBD4E3" stroke-width="5" stroke-linecap="round"/>${dots}</svg>`;
 
-  const today = new Date();
-  let lastM = null;
-  const items = T.map((t,i)=>{
-    const p = pts[i], topSide = i%2===0;
-    const late = t.end && t.end < today && t.status!=="done";
-    const icon = t.status==="done" ? "✅" : (P_ICON[t.p]||"❔");
-    let monthTag = "";
-    if(t.start){
-      const mk = t.start.getFullYear()*100+t.start.getMonth();
-      if(mk!==lastM){ lastM = mk;
-        monthTag = `<div class="rmonth" style="left:${p.x}px;top:${midY-14}px">${t.start.getFullYear()} · ${MN_M[t.start.getMonth()]}</div>`;
-      }
-    }
-    const ring = late ? "var(--risk)" : STATUS[t.status].hex;
-    const node = `<div class="rnode" style="left:${p.x}px;top:${p.y}px;border-color:${ring}">
-        ${icon}${t.p?`<span class="rp">${t.p}P</span>`:""}</div>`;
-    const cardPos = topSide
-      ? `bottom:${H-(p.y-48)}px;left:${p.x}px`
-      : `top:${p.y+48}px;left:${p.x}px`;
-    const card = `<div class="rcard ${topSide?"top":"bot"}" style="${cardPos}">
-        <span class="rt" style="border-color:${ring}">${esc(t.name)}</span>
-        <div class="rm">${t.brand?`<b>${esc(t.brand)}</b>`:""}${t.brand&&(t.start||t.end)?" · ":""}${t.start||t.end?`${fmtD(t.start)} → ${fmtD(t.end)}`:"огноогүй"}</div>
-        <span class="rbadge ${STATUS[t.status].cls}">${late?"⚑ хугацаа хэтэрсэн":STATUS[t.status].mn}${t.progress?` · ${t.progress}%`:""}</span>
-        <div class="rprog"><i style="width:${t.progress}%;background:${ring}"></i></div>
-      </div>`;
-    return monthTag + node + card;
+  const prioRank = t=>({2:0,1:1,0:2}[t.priority??0] ?? 2);
+  const items = stops.map(s=>{
+    const b = buckets[s.k];
+    const yr = Math.floor(s.k/12), mo = s.k%12;
+    const nodeY = s.up ? midY-A-16 : midY+A+16;
+    const node = `<div class="mnode" style="left:${s.x}px;top:${nodeY}px;background:${s.col}">${mo+1}<small>сар</small></div>`;
+    // Гол ажлууд: тухайн сард эхлэх, ач холбогдлоор
+    const top = [...b.starts].sort((a,c)=>prioRank(a)-prioRank(c) || (c.progress-a.progress)).slice(0,3);
+    const names = top.map(t=>esc(t.name.length>34? t.name.slice(0,33)+"…" : t.name)).join(" · ");
+    const doneN = [...b.starts,...b.ongoing].filter(t=>t.status==="done").length;
+    const card = `<div class="mcard ${s.up?"bot":"top"}" style="${s.up
+        ? `top:${midY+52}px;left:${s.x}px`
+        : `bottom:${H-(midY-52)}px;left:${s.x}px`}">
+      ${s.up?`<span class="mpill" style="border-color:${s.col}">${yr} · ${MN_M[mo]}</span>`:""}
+      <div class="mdesc"><b>${b.starts.length} ажил эхэлнэ</b>${b.ongoing.length?` · ${b.ongoing.length} үргэлжилнэ`:""}${names?`<br>${names}`:""}</div>
+      <div class="mstat">${doneN?`✅ ${doneN} дууссан`:""}</div>
+      ${!s.up?`<span class="mpill" style="border-color:${s.col}">${yr} · ${MN_M[mo]}</span>`:""}
+    </div>`;
+    return node + card;
   }).join("");
 
   el.style.width = W+"px"; el.style.height = H+"px";
@@ -671,7 +726,7 @@ function renderGantt(){
   const rows = sorted.map(t=>{
     const l = pos(t.start), w = Math.max(2,pos(t.end)-l);
     return `<div class="g-row">
-      <div class="g-label"><div class="t">${esc(t.name)}</div><div class="o">${t.p?t.p+"P · ":""}${esc(t.owner)}</div></div>
+      <div class="g-label"><div class="t">${esc(t.name)}</div><div class="o">${t.p?esc(pLabel(t.p))+" · ":""}${esc(t.owner)}</div></div>
       <div class="g-track">
         <div class="g-vlines" style="grid-template-columns:repeat(${nM},1fr)">${"<div></div>".repeat(nM)}</div>
         ${today>=min&&today<=max?`<div class="g-today" style="left:${pos(today)}%"></div>`:""}
@@ -703,11 +758,43 @@ function renderTable(){
   );
   $("#tbody").innerHTML = rows.map((t,i)=>`<tr>
     <td class="mono">${i+1}</td><td><b>${esc(t.name)}</b>${t.note?`<div style="color:#5C7396;font-size:12px;margin-top:2px">${esc(t.note)}</div>`:""}</td>
-    <td class="mono">${t.p?t.p+"P":"—"}</td><td>${esc(t.owner)||"—"}</td><td>${esc(t.brand)||"—"}</td>
+    <td class="mono" title="${t.p?esc(pLabelFull(t.p)):""}">${t.p?esc(pLabel(t.p)):"—"}</td><td>${esc(t.owner)||"—"}</td><td>${esc(t.brand)||"—"}</td>
     <td><span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}</span></td>
     <td class="mono">${fmtD(t.start)}<br>${fmtD(t.end)}</td>
     <td class="mono">${t.progress}%</td></tr>`).join("")
     || `<tr><td colspan="8" class="empty">Илэрц алга.</td></tr>`;
+}
+
+/* ── Зорилт — 2026 стратегийн төлөвлөгөө (8–12 сар) ── */
+const STRAT = [
+  {n:1, name:"Product idea improvement (PI)",            s:0,   e:1,   label:"8 сар / A/B Improvement"},
+  {n:2, name:"Communication idea improvement (CI)",      s:0,   e:5,   label:"8–12 сар"},
+  {n:3, name:"Brand Book & Brand Assets",                s:0,   e:2,   label:"8–9 сар"},
+  {n:4, name:"Digital Asset Management нэвтрүүлэх",      s:1,   e:4,   label:"9–11 сар"},
+  {n:5, name:"\u201cХэрэглэгч төвтэй\u201d компани болгох", s:0, e:5,   label:"8–12 сар"},
+  {n:6, name:"Нэгдсэн N1 дашбоардтай болох",             s:1,   e:3,   label:"9–10 сар"},
+  {n:7, name:"5 ба 9 сегментийн зураглал хийх",          s:2,   e:5,   label:"10–12 сар"},
+  {n:8, name:"10P",                                      s:0.3, e:1.6, label:"8–9 сар"},
+];
+function renderStrat(){
+  const el = $("#stratGrid");
+  const months = ["8-р сар","9-р сар","10-р сар","11-р сар","12-р сар"];
+  const head = `<div class="sg-head"><div class="sg-lab"></div>
+    <div class="sg-mos">${months.map(m=>`<div>${m}</div>`).join("")}</div></div>`;
+  // өнөөдрийн шугам (2026.08 – 2026.12 хүрээнд)
+  const t0 = new Date(2026,7,1), t1 = new Date(2027,0,1), now = new Date();
+  const todayPct = (now>=t0 && now<t1) ? ((now-t0)/(t1-t0))*100 : null;
+  const rows = STRAT.map(o=>{
+    const l = o.s/5*100, w = (o.e-o.s)/5*100;
+    return `<div class="sg-row">
+      <div class="sg-lab">${o.n}. ${esc(o.name)}</div>
+      <div class="sg-track">
+        <div class="sg-cols"><div></div><div></div><div></div><div></div><div></div></div>
+        ${todayPct!==null?`<div class="sg-today" style="left:${todayPct}%"><span>өнөөдөр</span></div>`:""}
+        <div class="sg-bar" style="left:${l}%;width:${w}%">${esc(o.label)}</div>
+      </div></div>`;
+  }).join("");
+  el.innerHTML = head + rows;
 }
 
 /* ───────────────────────── Wire up ───────────────────────── */
@@ -720,28 +807,35 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
 $("#rmRoad").onclick = ()=>setRMode("road");
 $("#rmList").onclick = ()=>setRMode("list");
 $("#rmGantt").onclick = ()=>setRMode("gantt");
+$("#roadFrom").addEventListener("change",renderRoad);
+$("#roadTo").addEventListener("change",renderRoad);
 
-$("#btnLoad").onclick = async ()=>{
-  const url = $("#sheetUrl").value.trim();
-  const b = $("#banner"), bt = $("#bannerTxt");
-  if(!url){ bt.textContent="Эхлээд Google Sheet-ийн линкээ буулгана уу."; return; }
-  bt.textContent = "Уншиж байна…"; b.className="banner";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1mvbqz09emtQmWVhp96koTq4Sjzkxs_Essg2DLCKxqXk/edit?gid=896600341";
+async function syncSheet(){
+  const b = $("#banner"), bt = $("#bannerTxt"), ss = $("#syncState");
+  ss.innerHTML = `<span class="dot" style="width:9px;height:9px;border-radius:50%;background:#E8A13C;display:inline-block"></span> Sheet-ээс татаж байна…`;
+  b.className="banner"; bt.textContent = "Google Sheet-ээс дата татаж байна…";
   try{
-    tasks = await loadSheet(url); live = true; pFilter=null;
+    tasks = await loadSheet(SHEET_URL); live = true;
     b.className="banner live";
-    bt.textContent = `Холбогдлоо ✓ ${tasks.length} ажил уншлаа. Sheet-ээ шинэчилсэн бол "Холбох"-ыг дахин дарж сэргээнэ.`;
-    try{ localStorage.setItem("tbg10p_url", url); }catch(e){}
+    const now = new Date();
+    const hm = `${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+    bt.textContent = `Sheet-тэй холбогдсон ✓ ${tasks.length} ажил · ${hm}-д шинэчлэв. Sheet дээр өөрчлөлт хийсэн бол "Шинэчлэх" дарна.`;
+    ss.innerHTML = `<span class="dot" style="width:9px;height:9px;border-radius:50%;background:#2FA574;display:inline-block"></span> Холбогдсон · ${tasks.length} ажил`;
     render();
   }catch(err){
-    b.className="banner"; bt.textContent = "⚠ "+err.message;
+    // Sheet-д хандаж чадаагүй бол жишээ дата харуулна
+    tasks=[...DEMO].map(t=>({...t,start:parseDate(t.start),end:parseDate(t.end)})); live=false;
+    b.className="banner"; bt.textContent = "⚠ "+err.message+" — түр жишээ дата харуулж байна. Шинэчлэх дарж дахин оролдоно уу.";
+    ss.innerHTML = `<span class="dot" style="width:9px;height:9px;border-radius:50%;background:#D95555;display:inline-block"></span> Холбогдоогүй`;
+    render();
   }
-};
-$("#btnDemo").onclick = ()=>{ tasks=[...DEMO].map(t=>({...t,start:parseDate(t.start),end:parseDate(t.end)})); live=false; pFilter=null;
-  $("#banner").className="banner"; $("#bannerTxt").textContent="Жишээ дата харагдаж байна — Google Sheet-ээ холбоод бодит тайлангаа гаргаарай."; render(); };
+}
+$("#btnRefresh").onclick = syncSheet;
 
 $("#btnCsv").onclick = ()=>{
   const head = "Ажил,10P,Хариуцагч,Брэнд,Статус,Эхлэх,Дуусах,Явц,Тайлбар\n";
-  const csv = head + tasks.map(t=>[t.name,t.p?t.p+"P":"",t.owner,t.brand,STATUS[t.status].mn,fmtD(t.start),fmtD(t.end),t.progress+"%",t.note]
+  const csv = head + tasks.map(t=>[t.name,t.p?pLabel(t.p):"",t.owner,t.brand,STATUS[t.status].mn,fmtD(t.start),fmtD(t.end),t.progress+"%",t.note]
     .map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}));
@@ -749,11 +843,8 @@ $("#btnCsv").onclick = ()=>{
 };
 
 /* init */
-(function(){
-  let saved=null; try{ saved = localStorage.getItem("tbg10p_url"); }catch(e){}
-  if(saved){ $("#sheetUrl").value = saved; }
-  $("#btnDemo").click();
-})();
+renderStrat();
+syncSheet();
 </script>
 </body>
 </html>
