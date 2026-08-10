@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBG · 10P Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1F3A;        /* гүн номин — уулын шөнө */
+  --peak:#10305E;       /* панель номин */
+  --glacier:#2E6BD6;    /* TBG цэнхэр */
+  --glacier-soft:#5B8DE8;
+  --ice:#EEF3FB;        /* мөсөн цагаан дэвсгэр */
+  --frost:#C9D8F0;      /* хүрээ */
+  --snow:#FFFFFF;
+  --done:#2FA574;
+  --doing:#2E6BD6;
+  --plan:#8AA3C7;
+  --hold:#E8A13C;
+  --risk:#D95555;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--ice);color:var(--ink);min-height:100vh}
+a{color:var(--glacier)}
+
+/* ── Header ─────────────────────────── */
+header{
+  background:linear-gradient(160deg,var(--ink) 0%,var(--peak) 70%,#1A4180 100%);
+  color:var(--snow);padding:28px 32px 0;position:relative;overflow:hidden;
+}
+header::after{ /* уулын нуруу silhouette */
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:46px;
+  background:
+    linear-gradient(135deg,transparent 49.6%,var(--ice) 50%) ,
+    linear-gradient(-135deg,transparent 49.6%,var(--ice) 50%);
+  background-size:9.09% 100%;opacity:0;
+}
+.hwrap{max-width:1240px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--glacier-soft);text-transform:uppercase}
+h1{font-size:clamp(24px,3.4vw,38px);font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+h1 .thin{font-weight:400;opacity:.75}
+.sub{font-size:14px;color:#B9CCEE;max-width:720px}
+
+/* connect bar */
+.connect{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 18px}
+.connect input{
+  flex:1;min-width:260px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);color:var(--snow);font-family:var(--mono);font-size:12.5px;outline:none;
+}
+.connect input::placeholder{color:#8FA9D6}
+.connect input:focus{border-color:var(--glacier-soft);background:rgba(255,255,255,.13)}
+button{
+  font-family:var(--sans);font-weight:800;font-size:13.5px;border:none;border-radius:10px;
+  padding:12px 20px;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;
+}
+button:focus-visible{outline:3px solid var(--glacier-soft);outline-offset:2px}
+.btn-load{background:var(--glacier);color:#fff}
+.btn-load:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(46,107,214,.45)}
+.btn-ghost{background:transparent;color:#B9CCEE;border:1px solid rgba(255,255,255,.3)}
+.btn-ghost:hover{color:#fff;border-color:#fff}
+.hint{font-size:12px;color:#8FA9D6;padding-bottom:16px}
+.hint code{font-family:var(--mono);background:rgba(255,255,255,.1);padding:1px 6px;border-radius:5px}
+details.howto{margin-bottom:18px;font-size:13px;color:#C6D6F2}
+details.howto summary{cursor:pointer;font-weight:600;color:#9FBBEA;list-style:none}
+details.howto summary::before{content:"▸ ";font-family:var(--mono)}
+details.howto[open] summary::before{content:"▾ "}
+details.howto ol{margin:10px 0 6px 20px;line-height:1.8}
+details.howto td,details.howto th{border:1px solid rgba(255,255,255,.2);padding:4px 10px;font-size:12px}
+details.howto table{border-collapse:collapse;margin-top:8px;font-family:var(--mono)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;padding-bottom:0}
+.tab{
+  background:transparent;color:#9FBBEA;border-radius:12px 12px 0 0;padding:12px 22px;font-weight:800;font-size:14px;
+}
+.tab.active{background:var(--ice);color:var(--ink)}
+.tab:not(.active):hover{color:#fff}
+
+/* ── Main ───────────────────────────── */
+main{max-width:1240px;margin:0 auto;padding:26px 32px 80px}
+.banner{
+  display:flex;gap:10px;align-items:center;background:#FFF6E4;border:1px solid #F0D9A6;color:#7A5A16;
+  border-radius:10px;padding:10px 16px;font-size:13px;margin-bottom:20px;
+}
+.banner.live{background:#E7F6EF;border-color:#BFE5D2;color:#1C6B47}
+.banner .dot{width:9px;height:9px;border-radius:50%;background:#E8A13C;flex-shrink:0}
+.banner.live .dot{background:var(--done);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* stat row */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--snow);border:1px solid var(--frost);border-radius:14px;padding:16px 18px}
+.stat .n{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.stat .l{font-size:12px;color:#5C7396;font-weight:600;margin-top:2px}
+.stat.s-done .n{color:var(--done)} .stat.s-doing .n{color:var(--doing)}
+.stat.s-plan .n{color:var(--plan)} .stat.s-hold .n{color:var(--hold)}
+
+/* 10P ridge — signature element */
+.ridge-wrap{background:var(--snow);border:1px solid var(--frost);border-radius:16px;padding:20px 22px 14px;margin-bottom:22px}
+.ridge-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+.sec-title{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.sec-sub{font-size:12px;color:#5C7396}
+.ridge{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin-top:16px}
+.pcell{
+  border-radius:10px;padding:10px 8px 8px;text-align:center;cursor:pointer;position:relative;
+  background:var(--ice);border:1px solid var(--frost);transition:transform .12s ease;
+}
+.pcell:hover{transform:translateY(-3px)}
+.pcell.active{outline:2.5px solid var(--glacier);outline-offset:1px}
+.pcell .pn{font-family:var(--mono);font-size:10px;color:#5C7396}
+.pcell .pk{font-size:12.5px;font-weight:800;margin:2px 0 6px;word-break:break-word}
+.pcell .cnt{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--glacier)}
+.pcell .peak{height:34px;display:flex;align-items:flex-end;justify-content:center;margin-top:6px}
+.pcell .peak svg{width:100%;height:100%}
+.pcell.zero .cnt{color:#B7C6DE}
+.pcell.zero{opacity:.75}
+
+/* status legend */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;font-weight:600;color:#41587B;margin:4px 0 18px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.chip{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* task cards by P (report view) */
+.pgroup{background:var(--snow);border:1px solid var(--frost);border-radius:16px;padding:18px 22px;margin-bottom:16px}
+.pgroup-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.pnum{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--snow);background:var(--glacier);
+  border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.pgroup-h h3{font-size:16px;font-weight:800}
+.pgroup-h .cnt2{font-family:var(--mono);font-size:12px;color:#5C7396;margin-left:auto}
+.task{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:12px 0;border-top:1px dashed var(--frost)}
+.task .tn{font-weight:600;font-size:14px}
+.task .tm{font-size:12px;color:#5C7396;display:flex;gap:14px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:800;border-radius:20px;padding:4px 12px;white-space:nowrap;align-self:start}
+.b-done{background:#E1F3EA;color:#1C6B47} .b-doing{background:#E2EBFB;color:#1D4FA8}
+.b-plan{background:#EBF0F8;color:#4E6588} .b-hold{background:#FBEFD9;color:#8A6414}
+.pbar{grid-column:1/-1;height:6px;border-radius:4px;background:var(--ice);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:4px;background:var(--glacier)}
+
+/* ── Roadmap (Gantt) ────────────────── */
+.gantt{background:var(--snow);border:1px solid var(--frost);border-radius:16px;padding:22px;overflow-x:auto}
+.gantt-grid{min-width:760px}
+.g-months{display:grid;margin-left:230px;border-bottom:2px solid var(--frost)}
+.g-months div{font-family:var(--mono);font-size:11px;font-weight:700;color:#41587B;padding:6px 4px;border-left:1px solid var(--frost);text-align:center}
+.g-row{display:flex;align-items:center;min-height:44px;border-bottom:1px solid #E4ECF8;position:relative}
+.g-label{width:230px;flex-shrink:0;padding:6px 12px 6px 0}
+.g-label .t{font-size:12.5px;font-weight:700;line-height:1.3}
+.g-label .o{font-size:11px;color:#5C7396}
+.g-track{flex:1;position:relative;height:44px}
+.g-vlines{position:absolute;inset:0;display:grid}
+.g-vlines div{border-left:1px solid #EDF2FA}
+.g-bar{
+  position:absolute;top:10px;height:24px;border-radius:7px;display:flex;align-items:center;
+  padding:0 10px;font-size:11px;font-weight:800;color:#fff;overflow:hidden;white-space:nowrap;
+  box-shadow:0 2px 6px rgba(11,31,58,.18);min-width:26px;
+}
+.g-bar .pct{opacity:.85;margin-left:6px;font-family:var(--mono);font-weight:400}
+.g-today{position:absolute;top:0;bottom:0;width:2px;background:var(--risk);z-index:3}
+.g-today::after{content:"өнөөдөр";position:absolute;top:-16px;left:-22px;font-family:var(--mono);font-size:9px;color:var(--risk)}
+
+/* ── Roadmap list (улирлын timeline) ── */
+.rmode{display:flex;gap:6px;margin-bottom:16px}
+.rmode button{background:var(--snow);border:1px solid var(--frost);color:#41587B;font-weight:800;font-size:13px;padding:9px 18px;border-radius:10px}
+.rmode button.on{background:var(--glacier);border-color:var(--glacier);color:#fff}
+.qtr{position:relative;padding-left:34px;margin-bottom:6px}
+.qtr::before{content:"";position:absolute;left:11px;top:8px;bottom:-6px;width:2px;background:var(--frost)}
+.qtr:last-child::before{bottom:auto;height:22px}
+.qtr-h{position:relative;display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.qtr-h::before{content:"";position:absolute;left:-30px;top:3px;width:16px;height:16px;border-radius:50%;
+  background:var(--glacier);border:3px solid var(--ice);box-shadow:0 0 0 2px var(--glacier)}
+.qtr-h.past::before{background:var(--done);box-shadow:0 0 0 2px var(--done)}
+.qtr-h.now::before{background:#fff;box-shadow:0 0 0 2px var(--risk);animation:pulse 2s infinite}
+.qtr-h h3{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.qtr-h .qs{font-family:var(--mono);font-size:11px;color:#5C7396}
+.qtr-h .qnow{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--risk);border:1px solid var(--risk);border-radius:12px;padding:2px 9px}
+.qcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:26px}
+.qcard{background:var(--snow);border:1px solid var(--frost);border-radius:14px;padding:14px 16px 12px;
+  display:flex;flex-direction:column;gap:8px;transition:transform .12s ease,box-shadow .12s ease}
+.qcard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(11,31,58,.1)}
+.qcard.late{border-color:#F0C9C9;background:#FFFBFB}
+.qcard-top{display:flex;align-items:center;gap:8px}
+.ptag{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--glacier);background:#E2EBFB;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.qcard-top .badge{margin-left:auto}
+.qcard .qn{font-size:14px;font-weight:800;line-height:1.35}
+.qcard .qm{font-size:12px;color:#5C7396;display:flex;gap:12px;flex-wrap:wrap}
+.qcard .late-tag{font-size:11px;font-weight:800;color:var(--risk)}
+.qbar{height:6px;border-radius:4px;background:var(--ice);overflow:hidden;margin-top:2px}
+.qbar i{display:block;height:100%;border-radius:4px}
+.qcard .qdates{font-family:var(--mono);font-size:11px;color:#7B90B2;display:flex;justify-content:space-between}
+
+/* ── Table ──────────────────────────── */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filters select,.filters input{
+  padding:10px 12px;border-radius:10px;border:1px solid var(--frost);background:var(--snow);
+  font-family:var(--sans);font-size:13px;color:var(--ink)
+}
+table.data{width:100%;border-collapse:collapse;background:var(--snow);border-radius:16px;overflow:hidden;border:1px solid var(--frost)}
+table.data th{background:var(--peak);color:#DCE8FB;font-size:12px;text-align:left;padding:12px 14px;font-weight:800}
+table.data td{padding:12px 14px;font-size:13px;border-top:1px solid #E4ECF8;vertical-align:top}
+table.data tr:hover td{background:#F4F8FE}
+.mono{font-family:var(--mono);font-size:12px}
+
+.empty{padding:60px 20px;text-align:center;color:#5C7396}
+.empty .big{font-size:40px}
+footer{max-width:1240px;margin:0 auto;padding:0 32px 40px;font-size:12px;color:#7B90B2}
+.view{display:none}.view.on{display:block}
+@media(max-width:860px){
+  header,main{padding-left:16px;padding-right:16px}
+  .ridge{grid-template-columns:repeat(5,1fr)}
+  .g-label{width:150px}
+  .g-months{margin-left:150px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="eyebrow">Tavan Bogd Group · Marketing · Хүйтэн Оргил</div>
+    <h1>10P Roadmap <span class="thin">/ Ажлын тайлан</span></h1>
+    <p class="sub">Google Sheet дээрх ажлуудаа 10P хүрээгээр автоматаар ангилж, тайлан ба roadmap болгон харуулна.</p>
+
+    <div class="connect">
+      <input id="sheetUrl" placeholder="Google Sheet-ийн линк буулгах…  (Share → Anyone with the link → Viewer)">
+      <button class="btn-load" id="btnLoad">Холбох</button>
+      <button class="btn-ghost" id="btnDemo">Жишээ дата</button>
+    </div>
+
+    <details class="howto">
+      <summary>Google Sheet-ээ хэрхэн бэлдэх вэ?</summary>
+      <ol>
+        <li>Sheet-ийн эхний мөрөнд доорх багануудыг бичнэ (дараалал хамаагүй, монгол/англи аль нь ч болно).</li>
+        <li><b>Share → Anyone with the link → Viewer</b> болгож нээнэ.</li>
+        <li>Линкээ дээрх талбарт буулгаад <b>Холбох</b> дарна. Таб (gid) сонгосон бол тухайн таб-ыг уншина.</li>
+      </ol>
+      <table>
+        <tr><th>Ажил*</th><th>10P*</th><th>Хариуцагч</th><th>Статус</th><th>Эхлэх</th><th>Дуусах</th><th>Брэнд</th><th>Явц %</th><th>Тайлбар</th></tr>
+        <tr><td>Digital board нэвтрүүлэх</td><td>6</td><td>М.Амаржаргал</td><td>Хийгдэж буй</td><td>2026-08-01</td><td>2026-10-31</td><td>ТБГ</td><td>35</td><td>—</td></tr>
+      </table>
+      <p style="margin-top:8px">10P багананд дугаар (1–10) эсвэл нэр (Product, Price, Promotion, Placement, People, Process, Physical, Positioning, Packaging, Partnership) аль нь ч болно. Статус: Төлөвлөсөн / Хийгдэж буй / Дууссан / Хойшилсон.</p>
+    </details>
+
+    <div class="tabs">
+      <button class="tab active" data-v="report">Тайлан</button>
+      <button class="tab" data-v="roadmap">Roadmap</button>
+      <button class="tab" data-v="table">Жагсаалт</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="banner" class="banner"><span class="dot"></span><span id="bannerTxt">Жишээ дата харагдаж байна — Google Sheet-ээ холбоод бодит тайлангаа гаргаарай.</span></div>
+
+  <!-- REPORT -->
+  <section id="v-report" class="view on">
+    <div class="stats" id="stats"></div>
+    <div class="ridge-wrap">
+      <div class="ridge-head">
+        <div><div class="sec-title">10P нуруу — ажлын хуваарилалт</div>
+        <div class="sec-sub">P дээр дарж шүүнэ · дахин дарж болиулна</div></div>
+      </div>
+      <div class="ridge" id="ridge"></div>
+    </div>
+    <div class="legend">
+      <span><i class="chip" style="background:var(--plan)"></i>Төлөвлөсөн</span>
+      <span><i class="chip" style="background:var(--doing)"></i>Хийгдэж буй</span>
+      <span><i class="chip" style="background:var(--done)"></i>Дууссан</span>
+      <span><i class="chip" style="background:var(--hold)"></i>Хойшилсон</span>
+    </div>
+    <div id="pgroups"></div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="v-roadmap" class="view">
+    <div class="rmode">
+      <button id="rmList" class="on">Жагсаалт</button>
+      <button id="rmGantt">Gantt</button>
+    </div>
+    <div id="rlist"></div>
+    <div class="gantt" id="ganttWrap" style="display:none"><div class="gantt-grid" id="gantt"></div></div>
+  </section>
+
+  <!-- TABLE -->
+  <section id="v-table" class="view">
+    <div class="filters">
+      <input id="fSearch" placeholder="Хайх…">
+      <select id="fP"><option value="">Бүх P</option></select>
+      <select id="fStatus"><option value="">Бүх статус</option></select>
+      <select id="fOwner"><option value="">Бүх хариуцагч</option></select>
+      <button class="btn-load" id="btnCsv" style="margin-left:auto">CSV татах</button>
+    </div>
+    <table class="data">
+      <thead><tr><th>#</th><th>Ажил</th><th>10P</th><th>Хариуцагч</th><th>Брэнд</th><th>Статус</th><th>Хугацаа</th><th>Явц</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>TBG Marketing · 10P Strategy · Хамтын хүч — The Power of Unity</footer>
+
+<script>
+/* ───────────────────────── 10P framework ───────────────────────── */
+const PS = [
+  {n:1,key:"Product",mn:"Бүтээгдэхүүн"},
+  {n:2,key:"Price",mn:"Үнэ"},
+  {n:3,key:"Promotion",mn:"Идэвхжүүлэлт"},
+  {n:4,key:"Placement",mn:"Суваг"},
+  {n:5,key:"People",mn:"Хэрэглэгч"},
+  {n:6,key:"Process",mn:"Процесс"},
+  {n:7,key:"Physical",mn:"Орчин"},
+  {n:8,key:"Positioning",mn:"Байршуулалт"},
+  {n:9,key:"Packaging",mn:"Сав баглаа"},
+  {n:10,key:"Partnership",mn:"Түншлэл"},
+];
+const STATUS = {
+  plan:{mn:"Төлөвлөсөн",cls:"b-plan",col:"var(--plan)",hex:"#8AA3C7"},
+  doing:{mn:"Хийгдэж буй",cls:"b-doing",col:"var(--doing)",hex:"#2E6BD6"},
+  done:{mn:"Дууссан",cls:"b-done",col:"var(--done)",hex:"#2FA574"},
+  hold:{mn:"Хойшилсон",cls:"b-hold",col:"var(--hold)",hex:"#E8A13C"},
+};
+
+/* ───────────────────────── Demo data (таны төлөвлөж буй ажлууд) ── */
+const DEMO = [
+  {name:"Communication Idea improvement (CI)", p:3, owner:"3 багийн ахлагч", brand:"Бүх брэнд", status:"doing", start:"2026-07-01", end:"2026-12-31", progress:30, note:"N1 insight + customer journey дээр суурилсан CI сайжруулалт, брэнд бүрээр"},
+  {name:"5/9 сегментийн судалгаа", p:5, owner:"Э.Цэлмэг", brand:"ТБГ групп", status:"doing", start:"2026-08-01", end:"2026-11-30", progress:15, note:"5 & 9 segment model — N=1 судалгаагаар баталгаажуулах"},
+  {name:"10P Partners — түншлэлийн хөтөлбөр", p:10, owner:"Г.Билигсайхан", brand:"ТБГ групп", status:"plan", start:"2026-09-01", end:"2027-02-28", progress:0, note:"Урт хугацааны ambassador + групп доторх cross-brand хамтын ажиллагаа"},
+  {name:"Digital board нэвтрүүлэх", p:6, owner:"М.Амаржаргал", brand:"ТБГ групп", status:"plan", start:"2026-09-01", end:"2026-12-31", progress:0, note:"Маркетингийн KPI-г нэг дэлгэцэнд төвлөрүүлэх"},
+  {name:"Product idea improvement (PI)", p:1, owner:"Л.Очирхүү", brand:"Бүх брэнд", status:"doing", start:"2026-06-01", end:"2027-06-01", progress:40, note:"PDCA+F мөчлөгөөр концепц шинэчлэх"},
+  {name:"Brand Book template", p:7, owner:"А.Нямбазар", brand:"ТБГ групп", status:"doing", start:"2026-05-01", end:"2026-10-31", progress:55, note:"АТБ: Таван Оргил, Нэг систем"},
+  {name:"Digital Asset Management", p:6, owner:"Б.Бат-Оргил", brand:"ТБГ групп", status:"plan", start:"2026-10-01", end:"2027-03-31", progress:0, note:"Группийн контентыг нэг санд төвлөрүүлэх"},
+];
+
+/* ───────────────────────── State ───────────────────────── */
+let tasks = [];
+let live = false;
+let pFilter = null;
+
+/* ───────────────────────── Helpers ───────────────────────── */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function normStatus(v){
+  const s = String(v||"").toLowerCase().trim();
+  if(!s) return "plan";
+  if(/дуус|done|complete|хийсэн|finish/.test(s)) return "done";
+  if(/хийгд|явагд|doing|progress|идэвх|эхэлс/.test(s)) return "doing";
+  if(/хойш|hold|зогс|paus|cancel|цуцал/.test(s)) return "hold";
+  return "plan";
+}
+function normP(v){
+  const s = String(v||"").toLowerCase().trim();
+  const num = parseInt(s.replace(/[^\d]/g,""));
+  if(num>=1 && num<=10) return num;
+  for(const p of PS){
+    if(s.includes(p.key.toLowerCase()) || s.includes(p.mn.toLowerCase())) return p.n;
+  }
+  if(/бүтээгдэх/.test(s))return 1; if(/үнэ/.test(s))return 2;
+  if(/идэвх|сурталч|promo/.test(s))return 3; if(/суваг|хуваар/.test(s))return 4;
+  if(/хэрэглэгч|хүн/.test(s))return 5; if(/процесс|систем/.test(s))return 6;
+  if(/орчин|тохижилт/.test(s))return 7; if(/байршуул|позишн/.test(s))return 8;
+  if(/сав|баглаа/.test(s))return 9; if(/түнш|хамтрагч|партнер/.test(s))return 10;
+  return 0; // ангилагдаагүй
+}
+function parseDate(v){
+  if(!v) return null;
+  if(v instanceof Date) return isNaN(v)?null:v;
+  const s = String(v).trim();
+  let m = s.match(/^Date\((\d+),(\d+),(\d+)/); // gviz format
+  if(m) return new Date(+m[1],+m[2],+m[3]);
+  m = s.match(/^(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})/);
+  if(m) return new Date(+m[1],+m[2]-1,+m[3]);
+  m = s.match(/^(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{4})/);
+  if(m) return new Date(+m[3],+m[2]-1,+m[1]);
+  const d = new Date(s); return isNaN(d)?null:d;
+}
+const fmtD = d=>d?`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`:"—";
+
+/* header detection */
+const COLMAP = [
+  ["name",   /ажил|зорилт|task|нэр|name|activity|төсөл/i],
+  ["p",      /10\s*p|^p$|хүрээ/i],
+  ["owner",  /хариуц|owner|ажилтан|responsible|эзэн/i],
+  ["status", /статус|status|төлөв/i],
+  ["start",  /эхлэх|эхэлсэн|start/i],
+  ["end",    /дуус|deadline|end|due/i],
+  ["brand",  /брэнд|компани|brand|company|салбар/i],
+  ["progress",/явц|%|progress|гүйцэтгэл/i],
+  ["note",   /тайлбар|note|тэмдэглэл|арга зам|comment/i],
+];
+function mapHeaders(headers){
+  const map = {};
+  headers.forEach((h,i)=>{
+    for(const [key,re] of COLMAP){
+      if(map[key]===undefined && re.test(String(h||""))){ map[key]=i; break; }
+    }
+  });
+  return map;
+}
+function rowsToTasks(headers, rows){
+  const m = mapHeaders(headers);
+  if(m.name===undefined){ // хэрэв name багана олдоогүй бол эхний баганыг ажил гэж үзнэ
+    m.name = 0;
+  }
+  return rows.map(r=>{
+    const g = k=> m[k]===undefined ? "" : r[m[k]];
+    const name = String(g("name")||"").trim();
+    if(!name) return null;
+    return {
+      name, p:normP(g("p")), owner:String(g("owner")||"").trim(),
+      brand:String(g("brand")||"").trim(), status:normStatus(g("status")),
+      start:parseDate(g("start")), end:parseDate(g("end")),
+      progress:Math.max(0,Math.min(100,parseFloat(String(g("progress")).replace("%",""))||0)),
+      note:String(g("note")||"").trim(),
+    };
+  }).filter(Boolean);
+}
+
+/* ───────────────────────── Google Sheet fetch ───────────────────── */
+function sheetIds(url){
+  const m = String(url).match(/\/d\/([a-zA-Z0-9\-_]+)/);
+  if(!m) return null;
+  const gid = (String(url).match(/[#&?]gid=(\d+)/)||[])[1];
+  return {id:m[1], gid};
+}
+async function loadSheet(url){
+  const ids = sheetIds(url);
+  if(!ids) throw new Error("Линк буруу байна — Google Sheet-ийн бүтэн линкээ буулгана уу.");
+  const q = `https://docs.google.com/spreadsheets/d/${ids.id}/gviz/tq?tqx=out:json${ids.gid?`&gid=${ids.gid}`:""}`;
+  const res = await fetch(q);
+  if(!res.ok) throw new Error("Sheet-д хандаж чадсангүй. Share → Anyone with the link → Viewer болгосон эсэхээ шалгана уу.");
+  const txt = await res.text();
+  const json = JSON.parse(txt.substring(txt.indexOf("{"), txt.lastIndexOf("}")+1));
+  if(json.status==="error") throw new Error("Sheet нээлттэй биш байна (Anyone with the link → Viewer).");
+  const cols = json.table.cols.map(c=>c.label||"");
+  let rows = json.table.rows.map(r=>(r.c||[]).map(c=>c? (c.f??c.v) : ""));
+  // Хэрэв label хоосон бол эхний мөрийг header гэж үзнэ
+  let headers = cols;
+  if(cols.every(c=>!c) && rows.length){ headers = rows[0].map(String); rows = rows.slice(1); }
+  const t = rowsToTasks(headers, rows);
+  if(!t.length) throw new Error("Мөр олдсонгүй — 'Ажил' багана болон дата байгаа эсэхээ шалгана уу.");
+  return t;
+}
+
+/* ───────────────────────── Rendering ───────────────────────── */
+function statCard(n,l,cls=""){return `<div class="stat ${cls}"><div class="n">${n}</div><div class="l">${l}</div></div>`}
+
+function render(){
+  const T = tasks;
+  // stats
+  const c = k=>T.filter(t=>t.status===k).length;
+  const avg = T.length? Math.round(T.reduce((a,t)=>a+t.progress,0)/T.length):0;
+  $("#stats").innerHTML =
+    statCard(T.length,"Нийт ажил")+
+    statCard(c("doing"),"Хийгдэж буй","s-doing")+
+    statCard(c("done"),"Дууссан","s-done")+
+    statCard(c("plan"),"Төлөвлөсөн","s-plan")+
+    statCard(c("hold"),"Хойшилсон","s-hold")+
+    statCard(avg+"%","Дундаж явц");
+
+  // ridge
+  const max = Math.max(1,...PS.map(p=>T.filter(t=>t.p===p.n).length));
+  $("#ridge").innerHTML = PS.map(p=>{
+    const n = T.filter(t=>t.p===p.n).length;
+    const h = 6 + Math.round(26*n/max);
+    return `<div class="pcell ${n?"":"zero"} ${pFilter===p.n?"active":""}" data-p="${p.n}" role="button" tabindex="0" aria-label="${p.key}: ${n} ажил">
+      <div class="pn">${p.n}P</div><div class="pk">${p.key}</div>
+      <div class="cnt">${n}</div>
+      <div class="peak"><svg viewBox="0 0 60 34" preserveAspectRatio="none">
+        <polygon points="0,34 30,${34-h} 60,34" fill="${n?"#2E6BD6":"#D9E4F5"}" opacity="${n?0.85:1}"/>
+        <polygon points="30,${34-h} ${30-h*0.28},${34-h*0.62} ${30+h*0.28},${34-h*0.62}" fill="#fff" opacity="${n?0.9:0}"/>
+      </svg></div></div>`;
+  }).join("");
+  document.querySelectorAll(".pcell").forEach(el=>{
+    const act=()=>{ const p=+el.dataset.p; pFilter = pFilter===p?null:p; render(); };
+    el.onclick=act; el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act();}};
+  });
+
+  // groups
+  const groups = PS.filter(p=>!pFilter||p.n===pFilter).map(p=>{
+    const list = T.filter(t=>t.p===p.n);
+    if(!list.length) return "";
+    return `<div class="pgroup"><div class="pgroup-h"><div class="pnum">${p.n}</div>
+      <h3>${p.key} · ${p.mn}</h3><span class="cnt2">${list.length} ажил</span></div>`+
+      list.map(t=>`<div class="task">
+        <div><div class="tn">${esc(t.name)}</div>
+        <div class="tm">${t.owner?`👤 ${esc(t.owner)}`:""} ${t.brand?`🏢 ${esc(t.brand)}`:""} ${t.start||t.end?`📅 ${fmtD(t.start)} → ${fmtD(t.end)}`:""}</div>
+        ${t.note?`<div class="tm" style="margin-top:3px">${esc(t.note)}</div>`:""}</div>
+        <span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}${t.progress?` · ${t.progress}%`:""}</span>
+        ${t.progress?`<div class="pbar"><i style="width:${t.progress}%;background:${STATUS[t.status].hex}"></i></div>`:""}
+      </div>`).join("")+`</div>`;
+  }).join("");
+  const un = T.filter(t=>t.p===0 && (!pFilter));
+  const unHtml = un.length? `<div class="pgroup"><div class="pgroup-h"><div class="pnum" style="background:#8AA3C7">?</div><h3>Ангилагдаагүй</h3><span class="cnt2">${un.length} ажил — Sheet дээрх 10P баганаа бөглөөрэй</span></div>`+
+    un.map(t=>`<div class="task"><div><div class="tn">${esc(t.name)}</div></div><span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}</span></div>`).join("")+`</div>` : "";
+  $("#pgroups").innerHTML = (groups+unHtml) || `<div class="empty"><div class="big">🏔</div><p>Харуулах ажил алга.</p></div>`;
+
+  renderRoadmapList();
+  renderGantt();
+  renderTable();
+}
+
+/* ── Roadmap жагсаалт — улирлаар бүлэглэсэн timeline ── */
+let rMode = "list";
+function qKey(d){return d.getFullYear()*10 + Math.floor(d.getMonth()/3)+1}
+function qLabel(k){return `${Math.floor(k/10)} он · Q${k%10}`}
+function qMonths(k){const q=k%10;return `${(q-1)*3+1}–${q*3} сар`}
+function renderRoadmapList(){
+  const el = $("#rlist");
+  const T = tasks.filter(t=>(!pFilter||t.p===pFilter));
+  const dated = T.filter(t=>t.start);
+  const undated = T.filter(t=>!t.start);
+  if(!T.length){ el.innerHTML=`<div class="empty"><div class="big">🏔</div><p>Харуулах ажил алга.</p></div>`; return; }
+  const today = new Date();
+  const nowQ = qKey(today);
+  const groups = {};
+  dated.forEach(t=>{ const k=qKey(t.start); (groups[k]=groups[k]||[]).push(t); });
+  const keys = Object.keys(groups).map(Number).sort((a,b)=>a-b);
+  const card = t=>{
+    const late = t.end && t.end < today && t.status!=="done";
+    const p = PS.find(x=>x.n===t.p);
+    return `<div class="qcard ${late?"late":""}">
+      <div class="qcard-top">
+        ${p?`<span class="ptag">${p.n}P ${p.key}</span>`:`<span class="ptag" style="color:#5C7396;background:#EBF0F8">—</span>`}
+        <span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}</span>
+      </div>
+      <div class="qn">${esc(t.name)}</div>
+      <div class="qm">${t.owner?`👤 ${esc(t.owner)}`:""} ${t.brand?`🏢 ${esc(t.brand)}`:""} ${late?`<span class="late-tag">⚑ хугацаа хэтэрсэн</span>`:""}</div>
+      ${t.note?`<div class="qm">${esc(t.note)}</div>`:""}
+      <div class="qbar"><i style="width:${t.progress}%;background:${STATUS[t.status].hex}"></i></div>
+      <div class="qdates"><span>${fmtD(t.start)} → ${fmtD(t.end)}</span><span>${t.progress}%</span></div>
+    </div>`;
+  };
+  let html = keys.map(k=>{
+    const list = groups[k].sort((a,b)=>a.start-b.start);
+    const cls = k<nowQ?"past":(k===nowQ?"now":"");
+    return `<div class="qtr">
+      <div class="qtr-h ${cls}"><h3>${qLabel(k)}</h3><span class="qs">${qMonths(k)} · ${list.length} ажил эхэлнэ</span>
+      ${k===nowQ?`<span class="qnow">ЭНЭ УЛИРАЛ</span>`:""}</div>
+      <div class="qcards">${list.map(card).join("")}</div></div>`;
+  }).join("");
+  if(undated.length){
+    html += `<div class="qtr"><div class="qtr-h"><h3>Огноогүй</h3><span class="qs">${undated.length} ажил — Sheet дээр эхлэх огноог нь нэмээрэй</span></div>
+      <div class="qcards">${undated.map(card).join("")}</div></div>`;
+  }
+  el.innerHTML = html;
+}
+function setRMode(m){
+  rMode = m;
+  $("#rmList").classList.toggle("on", m==="list");
+  $("#rmGantt").classList.toggle("on", m==="gantt");
+  $("#rlist").style.display = m==="list"?"":"none";
+  $("#ganttWrap").style.display = m==="gantt"?"":"none";
+}
+
+function monthDiff(a,b){return (b.getFullYear()-a.getFullYear())*12 + b.getMonth()-a.getMonth()}
+function renderGantt(){
+  const T = tasks.filter(t=>t.start&&t.end&&(!pFilter||t.p===pFilter));
+  const el = $("#gantt");
+  if(!T.length){ el.innerHTML=`<div class="empty"><div class="big">📅</div><p>Эхлэх/Дуусах огноотой ажил алга — Sheet дээрээ огноогоо нэмээрэй.</p></div>`; return; }
+  let min = new Date(Math.min(...T.map(t=>t.start))); min = new Date(min.getFullYear(),min.getMonth(),1);
+  let max = new Date(Math.max(...T.map(t=>t.end)));   max = new Date(max.getFullYear(),max.getMonth()+1,0);
+  const nM = monthDiff(min,max)+1;
+  const MN = ["1-р","2-р","3-р","4-р","5-р","6-р","7-р","8-р","9-р","10-р","11-р","12-р"];
+  const months = Array.from({length:nM},(_,i)=>{const d=new Date(min.getFullYear(),min.getMonth()+i,1);
+    return `<div>${d.getMonth()===0||i===0?d.getFullYear()+" ":""}${MN[d.getMonth()]}</div>`}).join("");
+  const total = max-min;
+  const pos = d=>Math.max(0,Math.min(100,(d-min)/total*100));
+  const today = new Date();
+  const sorted = [...T].sort((a,b)=>a.start-b.start);
+  const rows = sorted.map(t=>{
+    const l = pos(t.start), w = Math.max(2,pos(t.end)-l);
+    return `<div class="g-row">
+      <div class="g-label"><div class="t">${esc(t.name)}</div><div class="o">${t.p?t.p+"P · ":""}${esc(t.owner)}</div></div>
+      <div class="g-track">
+        <div class="g-vlines" style="grid-template-columns:repeat(${nM},1fr)">${"<div></div>".repeat(nM)}</div>
+        ${today>=min&&today<=max?`<div class="g-today" style="left:${pos(today)}%"></div>`:""}
+        <div class="g-bar" style="left:${l}%;width:${w}%;background:${STATUS[t.status].hex}" title="${esc(t.name)}: ${fmtD(t.start)} → ${fmtD(t.end)}">
+          ${w>14?esc(t.name):""}${t.progress&&w>20?`<span class="pct">${t.progress}%</span>`:""}
+        </div>
+      </div></div>`;
+  }).join("");
+  el.innerHTML = `<div class="g-months" style="grid-template-columns:repeat(${nM},1fr)">${months}</div>${rows}`;
+}
+
+function fill(sel, vals, label){
+  const cur = sel.value;
+  sel.innerHTML = `<option value="">${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join("");
+  sel.value = cur;
+}
+function renderTable(){
+  fill($("#fP"), PS.map(p=>p.n+"P "+p.key), "Бүх P");
+  fill($("#fStatus"), Object.values(STATUS).map(s=>s.mn), "Бүх статус");
+  fill($("#fOwner"), [...new Set(tasks.map(t=>t.owner).filter(Boolean))], "Бүх хариуцагч");
+  const q = $("#fSearch").value.toLowerCase();
+  const fp = $("#fP").value, fs = $("#fStatus").value, fo = $("#fOwner").value;
+  const rows = tasks.filter(t=>
+    (!q || (t.name+t.note+t.brand+t.owner).toLowerCase().includes(q)) &&
+    (!fp || fp.startsWith(t.p+"P")) &&
+    (!fs || STATUS[t.status].mn===fs) &&
+    (!fo || t.owner===fo) &&
+    (!pFilter || t.p===pFilter)
+  );
+  $("#tbody").innerHTML = rows.map((t,i)=>`<tr>
+    <td class="mono">${i+1}</td><td><b>${esc(t.name)}</b>${t.note?`<div style="color:#5C7396;font-size:12px;margin-top:2px">${esc(t.note)}</div>`:""}</td>
+    <td class="mono">${t.p?t.p+"P":"—"}</td><td>${esc(t.owner)||"—"}</td><td>${esc(t.brand)||"—"}</td>
+    <td><span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}</span></td>
+    <td class="mono">${fmtD(t.start)}<br>${fmtD(t.end)}</td>
+    <td class="mono">${t.progress}%</td></tr>`).join("")
+    || `<tr><td colspan="8" class="empty">Илэрц алга.</td></tr>`;
+}
+
+/* ───────────────────────── Wire up ───────────────────────── */
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));
+  $("#v-"+b.dataset.v).classList.add("on");
+});
+["fSearch","fP","fStatus","fOwner"].forEach(id=>{$("#"+id).addEventListener("input",renderTable)});
+$("#rmList").onclick = ()=>setRMode("list");
+$("#rmGantt").onclick = ()=>setRMode("gantt");
+
+$("#btnLoad").onclick = async ()=>{
+  const url = $("#sheetUrl").value.trim();
+  const b = $("#banner"), bt = $("#bannerTxt");
+  if(!url){ bt.textContent="Эхлээд Google Sheet-ийн линкээ буулгана уу."; return; }
+  bt.textContent = "Уншиж байна…"; b.className="banner";
+  try{
+    tasks = await loadSheet(url); live = true; pFilter=null;
+    b.className="banner live";
+    bt.textContent = `Холбогдлоо ✓ ${tasks.length} ажил уншлаа. Sheet-ээ шинэчилсэн бол "Холбох"-ыг дахин дарж сэргээнэ.`;
+    try{ localStorage.setItem("tbg10p_url", url); }catch(e){}
+    render();
+  }catch(err){
+    b.className="banner"; bt.textContent = "⚠ "+err.message;
+  }
+};
+$("#btnDemo").onclick = ()=>{ tasks=[...DEMO].map(t=>({...t,start:parseDate(t.start),end:parseDate(t.end)})); live=false; pFilter=null;
+  $("#banner").className="banner"; $("#bannerTxt").textContent="Жишээ дата харагдаж байна — Google Sheet-ээ холбоод бодит тайлангаа гаргаарай."; render(); };
+
+$("#btnCsv").onclick = ()=>{
+  const head = "Ажил,10P,Хариуцагч,Брэнд,Статус,Эхлэх,Дуусах,Явц,Тайлбар\n";
+  const csv = head + tasks.map(t=>[t.name,t.p?t.p+"P":"",t.owner,t.brand,STATUS[t.status].mn,fmtD(t.start),fmtD(t.end),t.progress+"%",t.note]
+    .map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"}));
+  a.download = "tbg_10p_report.csv"; a.click();
+};
+
+/* init */
+(function(){
+  let saved=null; try{ saved = localStorage.getItem("tbg10p_url"); }catch(e){}
+  if(saved){ $("#sheetUrl").value = saved; }
+  $("#btnDemo").click();
+})();
+</script>
+</body>
+</html>
