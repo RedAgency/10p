@@ -184,6 +184,33 @@ main{max-width:1240px;margin:0 auto;padding:26px 32px 80px}
 .qbar i{display:block;height:100%;border-radius:4px}
 .qcard .qdates{font-family:var(--mono);font-size:11px;color:#7B90B2;display:flex;justify-content:space-between}
 
+/* ── Roadmap зам (winding road) ── */
+.road-wrap{background:var(--snow);border:1px solid var(--frost);border-radius:16px;padding:18px 0 10px;overflow:hidden}
+.road-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 22px 6px;flex-wrap:wrap;gap:6px}
+.road-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.road-scroll::-webkit-scrollbar{height:10px}
+.road-scroll::-webkit-scrollbar-thumb{background:var(--frost);border-radius:6px}
+.road-canvas{position:relative}
+.road-canvas svg{display:block}
+.rnode{position:absolute;width:76px;height:76px;border-radius:50%;background:#fff;
+  border:3px solid var(--frost);display:flex;align-items:center;justify-content:center;
+  font-size:30px;box-shadow:0 8px 20px rgba(11,31,58,.16);z-index:2;transform:translate(-50%,-50%)}
+.rnode .rp{position:absolute;bottom:-9px;font-family:var(--mono);font-size:10px;font-weight:700;
+  background:var(--ink);color:#fff;border-radius:10px;padding:1px 8px}
+.rcard{position:absolute;width:196px;transform:translateX(-50%);display:flex;flex-direction:column;gap:5px;z-index:1}
+.rcard.top{justify-content:flex-end;text-align:center;align-items:center}
+.rcard.bot{text-align:center;align-items:center}
+.rcard .rt{font-size:13px;font-weight:800;line-height:1.3;color:var(--ink);
+  border-bottom:3px solid var(--glacier);padding-bottom:4px;display:inline;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rcard .rm{font-size:11px;color:#5C7396;line-height:1.45}
+.rcard .rm b{color:#41587B}
+.rcard .rbadge{font-size:10px;font-weight:800;border-radius:12px;padding:3px 10px}
+.rcard .rprog{width:110px;height:5px;border-radius:4px;background:var(--ice);overflow:hidden}
+.rcard .rprog i{display:block;height:100%;border-radius:4px}
+.rmonth{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:10px;font-weight:700;
+  color:#fff;background:var(--glacier);border-radius:12px;padding:3px 10px;z-index:3;white-space:nowrap}
+
 /* ── Table ──────────────────────────── */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .filters select,.filters input{
@@ -270,10 +297,18 @@ footer{max-width:1240px;margin:0 auto;padding:0 32px 40px;font-size:12px;color:#
   <!-- ROADMAP -->
   <section id="v-roadmap" class="view">
     <div class="rmode">
-      <button id="rmList" class="on">Жагсаалт</button>
+      <button id="rmRoad" class="on">Зам</button>
+      <button id="rmList">Жагсаалт</button>
       <button id="rmGantt">Gantt</button>
     </div>
-    <div id="rlist"></div>
+    <div class="road-wrap" id="roadWrap">
+      <div class="road-head">
+        <div><div class="sec-title" id="roadTitle">Ажлын зам</div>
+        <div class="sec-sub">Эхлэх огноогоор эрэмбэлсэн · баруун тийш гүйлгэж үзнэ</div></div>
+      </div>
+      <div class="road-scroll"><div class="road-canvas" id="road"></div></div>
+    </div>
+    <div id="rlist" style="display:none"></div>
     <div class="gantt" id="ganttWrap" style="display:none"><div class="gantt-grid" id="gantt"></div></div>
   </section>
 
@@ -339,7 +374,8 @@ const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":
 function normStatus(v){
   const s = String(v||"").toLowerCase().trim();
   if(!s) return "plan";
-  if(/дуус|done|complete|хийсэн|finish/.test(s)) return "done";
+  if(/эхлээгүй|not started/.test(s)) return "plan";
+  if(/дуус|done|complete|хийсэн|хийгдсэн|finish/.test(s)) return "done";
   if(/хийгд|явагд|doing|progress|идэвх|эхэлс/.test(s)) return "doing";
   if(/хойш|hold|зогс|paus|cancel|цуцал/.test(s)) return "hold";
   return "plan";
@@ -491,13 +527,14 @@ function render(){
     un.map(t=>`<div class="task"><div><div class="tn">${esc(t.name)}</div></div><span class="badge ${STATUS[t.status].cls}">${STATUS[t.status].mn}</span></div>`).join("")+`</div>` : "";
   $("#pgroups").innerHTML = (groups+unHtml) || `<div class="empty"><div class="big">🏔</div><p>Харуулах ажил алга.</p></div>`;
 
+  renderRoad();
   renderRoadmapList();
   renderGantt();
   renderTable();
 }
 
 /* ── Roadmap жагсаалт — улирлаар бүлэглэсэн timeline ── */
-let rMode = "list";
+let rMode = "road";
 function qKey(d){return d.getFullYear()*10 + Math.floor(d.getMonth()/3)+1}
 function qLabel(k){return `${Math.floor(k/10)} он · Q${k%10}`}
 function qMonths(k){const q=k%10;return `${(q-1)*3+1}–${q*3} сар`}
@@ -541,10 +578,77 @@ function renderRoadmapList(){
   }
   el.innerHTML = html;
 }
+/* ── Roadmap зам — winding road ── */
+const P_ICON = {1:"💡",2:"💰",3:"📣",4:"🛒",5:"👥",6:"⚙️",7:"🏢",8:"🎯",9:"📦",10:"🤝",0:"❔"};
+const MN_M = ["1-р сар","2-р сар","3-р сар","4-р сар","5-р сар","6-р сар","7-р сар","8-р сар","9-р сар","10-р сар","11-р сар","12-р сар"];
+function renderRoad(){
+  const el = $("#road");
+  let T = tasks.filter(t=>(!pFilter||t.p===pFilter));
+  if(!T.length){ el.innerHTML=`<div class="empty"><div class="big">🏔</div><p>Харуулах ажил алга.</p></div>`; $("#roadTitle").textContent="Ажлын зам"; return; }
+  const dated = T.filter(t=>t.start).sort((a,b)=>a.start-b.start || (b.progress-a.progress));
+  const undated = T.filter(t=>!t.start);
+  T = [...dated, ...undated];
+  $("#roadTitle").textContent = `Ажлын зам · ${T.length} буудал`;
+
+  const STEP=215, PAD=130, A=62, H=520, midY=H/2;
+  const W = PAD*2 + Math.max(0,(T.length-1))*STEP;
+  const pts = T.map((t,i)=>({x:PAD+i*STEP, y:i%2===0? midY-A : midY+A}));
+
+  // зам — гөлгөр муруй
+  let d = `M ${pts[0].x} ${pts[0].y}`;
+  for(let i=1;i<pts.length;i++){
+    const a=pts[i-1], b=pts[i], mx=(a.x+b.x)/2;
+    d += ` C ${mx} ${a.y}, ${mx} ${b.y}, ${b.x} ${b.y}`;
+  }
+  // зогсоолын дунд жижиг цэгүүд
+  const dots = pts.slice(1).map((p,i)=>{
+    const a=pts[i], mx=(a.x+p.x)/2;
+    return `<circle cx="${mx}" cy="${midY}" r="5" fill="#10305E"/><circle cx="${mx}" cy="${midY}" r="2.2" fill="#EEF3FB"/>`;
+  }).join("");
+
+  const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+    <path d="${d}" fill="none" stroke="#0B1F3A" stroke-width="11" stroke-linecap="round" opacity=".92"/>
+    <path d="${d}" fill="none" stroke="#EEF3FB" stroke-width="2.5" stroke-dasharray="9 11" stroke-linecap="round"/>
+    ${dots}</svg>`;
+
+  const today = new Date();
+  let lastM = null;
+  const items = T.map((t,i)=>{
+    const p = pts[i], topSide = i%2===0;
+    const late = t.end && t.end < today && t.status!=="done";
+    const icon = t.status==="done" ? "✅" : (P_ICON[t.p]||"❔");
+    let monthTag = "";
+    if(t.start){
+      const mk = t.start.getFullYear()*100+t.start.getMonth();
+      if(mk!==lastM){ lastM = mk;
+        monthTag = `<div class="rmonth" style="left:${p.x}px;top:${midY-14}px">${t.start.getFullYear()} · ${MN_M[t.start.getMonth()]}</div>`;
+      }
+    }
+    const ring = late ? "var(--risk)" : STATUS[t.status].hex;
+    const node = `<div class="rnode" style="left:${p.x}px;top:${p.y}px;border-color:${ring}">
+        ${icon}${t.p?`<span class="rp">${t.p}P</span>`:""}</div>`;
+    const cardPos = topSide
+      ? `bottom:${H-(p.y-48)}px;left:${p.x}px`
+      : `top:${p.y+48}px;left:${p.x}px`;
+    const card = `<div class="rcard ${topSide?"top":"bot"}" style="${cardPos}">
+        <span class="rt" style="border-color:${ring}">${esc(t.name)}</span>
+        <div class="rm">${t.brand?`<b>${esc(t.brand)}</b>`:""}${t.brand&&(t.start||t.end)?" · ":""}${t.start||t.end?`${fmtD(t.start)} → ${fmtD(t.end)}`:"огноогүй"}</div>
+        <span class="rbadge ${STATUS[t.status].cls}">${late?"⚑ хугацаа хэтэрсэн":STATUS[t.status].mn}${t.progress?` · ${t.progress}%`:""}</span>
+        <div class="rprog"><i style="width:${t.progress}%;background:${ring}"></i></div>
+      </div>`;
+    return monthTag + node + card;
+  }).join("");
+
+  el.style.width = W+"px"; el.style.height = H+"px";
+  el.innerHTML = svg + items;
+}
+
 function setRMode(m){
   rMode = m;
+  $("#rmRoad").classList.toggle("on", m==="road");
   $("#rmList").classList.toggle("on", m==="list");
   $("#rmGantt").classList.toggle("on", m==="gantt");
+  $("#roadWrap").style.display = m==="road"?"":"none";
   $("#rlist").style.display = m==="list"?"":"none";
   $("#ganttWrap").style.display = m==="gantt"?"":"none";
 }
@@ -613,6 +717,7 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
   $("#v-"+b.dataset.v).classList.add("on");
 });
 ["fSearch","fP","fStatus","fOwner"].forEach(id=>{$("#"+id).addEventListener("input",renderTable)});
+$("#rmRoad").onclick = ()=>setRMode("road");
 $("#rmList").onclick = ()=>setRMode("list");
 $("#rmGantt").onclick = ()=>setRMode("gantt");
 
